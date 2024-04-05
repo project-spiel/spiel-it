@@ -4,7 +4,7 @@ This is a Spiel demo application.
 
 ## Installation
 
-TODO: Offer Flatpaks
+[Install this Flatpak](http://project-spiel.org/spiel-it/spiel-it.flatpakref)
 
 ## Build instructions
 
