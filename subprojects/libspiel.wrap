@@ -1,0 +1,8 @@
+[wrap-git]
+directory=libspiel
+url=https://github.com/project-spiel/libspiel.git
+revision=main
+depth=1
+
+[provide]
+dependency_names = spiel-1.0
