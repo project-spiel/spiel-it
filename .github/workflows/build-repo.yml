@@ -1,6 +1,10 @@
 name: Build Flatpak Repository
 
-on: workflow_dispatch
+on:
+  push:
+    branches: ["main"]
+  
+  workflow_dispatch:
 
 jobs:
   flatpak:
