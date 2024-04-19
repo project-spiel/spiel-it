@@ -27,6 +27,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Checkout website repo
+        uses: actions/checkout@v4
+        with:
+          repository: project-spiel/project-spiel.github.io
+          ssh-key: ${{ secrets.WEBSITE_KEY }}
+          ref: gh-pages
+          path: website
+
+      - name: Setup repo directory
+        run: |
+          mkdir -p website/repo
+          ln -s website/repo repo
+  
       - name: Setup GPG
         id: gpg
         uses: crazy-max/ghaction-import-gpg@v6
@@ -47,10 +60,15 @@ jobs:
           arch: x86_64
           gpg-sign: ${{ steps.gpg.outputs.fingerprint }}
           upload-bundles: true
+          cache-key: ''
 
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@releases/v4
-        with:
-          folder: ${{ steps.build.outputs.repository }}
-          target-folder: repo
-          single-commit: true
+        run: |
+          cd website
+          git config --global user.email "me@project-spiel.org"
+          git config --global user.name "Spiel Robot"
+          git add repo
+          git commit -m "Updated eSpeak-NG packages"
+          git push -f origin gh-pages
+          
+  
