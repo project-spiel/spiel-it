@@ -60,3 +60,16 @@ configure_file(
   configuration: desktop_conf,
   install_dir: desktop_file_dir
 )
+
+# Appstream
+appstream_file = i18n.merge_file(
+        input: 'org.project_spiel.SpielInstaller.metainfo.xml.in',
+       output: 'org.project_spiel.SpielInstaller.metainfo.xml',
+       po_dir: '../po',
+      install: true,
+  install_dir: get_option('datadir') / 'metainfo'
+)
+
+appstreamcli = find_program('appstreamcli', required: false, disabler: true)
+test('Validate appstream file', appstreamcli,
+     args: ['validate', '--no-net', '--explain', appstream_file])
