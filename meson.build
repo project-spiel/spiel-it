@@ -16,9 +16,9 @@ py = python_module.find_installation('python3', required: true, modules: [
 dependency('spiel-1.0', fallback: ['libspiel', 'spiel_lib_dep'])
 
 application_id = 'org.project_spiel.SpielIt'
-app_data_dir = get_option('prefix') / get_option('datadir') / 'spiel-it'
-iconsdir = get_option('prefix') / get_option('datadir') / 'icons'
-desktop_file_dir = get_option('prefix') / get_option('datadir') / 'applications'
+app_data_dir = get_option('datadir') / 'spiel-it'
+iconsdir = get_option('datadir') / 'icons'
+desktop_file_dir = get_option('datadir') / 'applications'
 # Configuration used in template files
 config = configuration_data()
 config.set('app_data_dir', app_data_dir)
@@ -47,7 +47,7 @@ install_data(
 #icon
 install_data(
   'spiel-it.svg',
-  install_dir: iconsdir / 'hicolor' / 'symbolic' / 'apps',
+  install_dir: iconsdir / 'hicolor' / 'scalable' / 'apps',
   rename: '@0@.svg'.format(application_id)
 )
 
@@ -61,15 +61,7 @@ configure_file(
   install_dir: desktop_file_dir
 )
 
-# Appstream
-appstream_file = i18n.merge_file(
-        input: 'org.project_spiel.SpielInstaller.metainfo.xml.in',
-       output: 'org.project_spiel.SpielInstaller.metainfo.xml',
-       po_dir: '../po',
-      install: true,
-  install_dir: get_option('datadir') / 'metainfo'
+install_data(
+  'data' / 'org.project_spiel.SpielIt.metainfo.xml',
+  install_dir: get_option('datadir') / 'metainfo',
 )
-
-appstreamcli = find_program('appstreamcli', required: false, disabler: true)
-test('Validate appstream file', appstreamcli,
-     args: ['validate', '--no-net', '--explain', appstream_file])
