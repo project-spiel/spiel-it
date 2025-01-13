@@ -16,9 +16,9 @@ py = python_module.find_installation('python3', required: true, modules: [
 dependency('spiel-1.0', fallback: ['libspiel', 'spiel_lib_dep'])
 
 application_id = 'org.project_spiel.SpielIt'
-app_data_dir = get_option('datadir') / 'spiel-it'
-iconsdir = get_option('datadir') / 'icons'
-desktop_file_dir = get_option('datadir') / 'applications'
+app_data_dir = get_option('prefix') / get_option('datadir') / 'spiel-it'
+iconsdir = get_option('prefix') / get_option('datadir') / 'icons'
+desktop_file_dir = get_option('prefix') / get_option('datadir') / 'applications'
 # Configuration used in template files
 config = configuration_data()
 config.set('app_data_dir', app_data_dir)
@@ -63,5 +63,5 @@ configure_file(
 
 install_data(
   'data' / 'org.project_spiel.SpielIt.metainfo.xml',
-  install_dir: get_option('datadir') / 'metainfo',
+  install_dir: get_option('prefix') / get_option('datadir') / 'metainfo',
 )
